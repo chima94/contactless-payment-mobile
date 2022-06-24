@@ -6,6 +6,7 @@ import 'package:contactless_payment_app/data/remote/response/cart_item_response.
 
 import 'package:contactless_payment_app/data/remote/response/token_response.dart';
 import 'package:contactless_payment_app/data/remote/response/user_response.dart';
+import 'package:flutter/cupertino.dart';
 
 class ApiService implements RemoteDatasource {
   static const String xAccessToken = 'x-access-token';
@@ -56,5 +57,14 @@ class ApiService implements RemoteDatasource {
         .toList();
 
     return items;
+  }
+
+  @override
+  Future<UserResponse> topupWallet(int amount, String token) async {
+    final url = Uri.https(baseUrl, '/api/topUp/${amount}');
+    final json = await NetworkUtils.get(url, token, headers: {
+      'x-auth-token': token,
+    });
+    return UserResponse.fromJson(json);
   }
 }

@@ -7,6 +7,7 @@ part 'user_entity.g.dart';
 abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   String get name;
   String get email;
+  int get wallet;
   String get date;
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;

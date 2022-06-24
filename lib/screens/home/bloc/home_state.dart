@@ -1,24 +1,23 @@
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
-  final bool isLoading;
-  final String msg;
-
+  final int wallet;
+  final String username;
   const HomeState({
-    this.isLoading = false,
-    this.msg = '',
+    this.wallet = 0,
+    this.username = '',
   });
 
-  HomeState copyWith({bool? isLoading, String? msg}) {
+  HomeState copyWith({String? username, int? wallet}) {
     return HomeState(
-      isLoading: isLoading ?? this.isLoading,
-      msg: msg ?? this.msg,
+      wallet: wallet ?? this.wallet,
+      username: username ?? this.username,
     );
   }
 
   @override
   List<Object> get props => [
-        isLoading,
-        msg,
+        wallet,
+        username,
       ];
 }

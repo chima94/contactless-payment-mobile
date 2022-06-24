@@ -1,3 +1,5 @@
+import 'package:contactless_payment_app/dialog/loading_screen.dart';
+import 'package:contactless_payment_app/domain/repositories/user_repository.dart';
 import 'package:contactless_payment_app/screens/home/view/widgets/title_text.dart';
 import 'package:contactless_payment_app/screens/topup/bloc/top_up_bloc.dart';
 import 'package:contactless_payment_app/screens/topup/bloc/top_up_event.dart';
@@ -11,7 +13,7 @@ class TopUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TopUpBloc(),
+      create: (_) => TopUpBloc(userRepository: context.read<UserRepository>()),
       child: const TopUpView(),
     );
   }
@@ -22,93 +24,109 @@ class TopUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue.shade900,
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
-                  Text(
-                    "Top My Wallet",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
+    return BlocListener<TopUpBloc, TopUpState>(
+      listenWhen: (previous, current) =>
+          previous.isLoading != current.isLoading,
+      listener: (context, state) {
+        if (state.isLoading) {
+          LoadingScreen.instance()
+              .show(context: context, text: 'Funding Wallet');
+        } else {
+          LoadingScreen.instance().hide();
+        }
+        if (state.msg.isNotEmpty) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.msg)));
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.blue.shade900,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Expanded(
+                      flex: 1,
+                      child: SizedBox(),
+                    ),
+                    Text(
+                      "Top My Wallet",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _AmountDisplay(),
+                    Expanded(
+                      flex: 2,
+                      child: SizedBox(),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: -140,
+                top: -270,
+                child: CircleAvatar(
+                  radius: 190,
+                  backgroundColor: Colors.blue.shade300,
+                ),
+              ),
+              Positioned(
+                left: -130,
+                top: -300,
+                child: CircleAvatar(
+                  radius: 190,
+                  backgroundColor: Colors.blue.shade500,
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height * .4,
+                right: -150,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.yellow.shade600,
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height * .4,
+                right: -180,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.yellow.shade400,
+                ),
+              ),
+              Positioned(
+                left: 0,
+                top: 40,
+                child: Row(
+                  children: const [
+                    BackButton(
                       color: Colors.white,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _AmountDisplay(),
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(),
-                  ),
-                ],
+                    SizedBox(
+                      width: 20,
+                    ),
+                    TittleText(
+                      text: 'Top Up',
+                      color: Colors.white,
+                    )
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              left: -140,
-              top: -270,
-              child: CircleAvatar(
-                radius: 190,
-                backgroundColor: Colors.blue.shade300,
-              ),
-            ),
-            Positioned(
-              left: -130,
-              top: -300,
-              child: CircleAvatar(
-                radius: 190,
-                backgroundColor: Colors.blue.shade500,
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * .4,
-              right: -150,
-              child: CircleAvatar(
-                radius: 130,
-                backgroundColor: Colors.yellow.shade600,
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * .4,
-              right: -180,
-              child: CircleAvatar(
-                radius: 130,
-                backgroundColor: Colors.yellow.shade400,
-              ),
-            ),
-            Positioned(
-              left: 0,
-              top: 40,
-              child: Row(
-                children: const [
-                  BackButton(
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  TittleText(
-                    text: 'Top Up',
-                    color: Colors.white,
-                  )
-                ],
-              ),
-            ),
-            const _ButtonWidget()
-          ],
+              const _ButtonWidget()
+            ],
+          ),
         ),
       ),
     );

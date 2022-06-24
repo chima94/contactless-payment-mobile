@@ -12,15 +12,22 @@ class _$User extends User {
   @override
   final String email;
   @override
+  final int wallet;
+  @override
   final String date;
 
   factory _$User([void Function(UserBuilder)? updates]) =>
       (new UserBuilder()..update(updates))._build();
 
-  _$User._({required this.name, required this.email, required this.date})
+  _$User._(
+      {required this.name,
+      required this.email,
+      required this.wallet,
+      required this.date})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'User', 'name');
     BuiltValueNullFieldError.checkNotNull(email, r'User', 'email');
+    BuiltValueNullFieldError.checkNotNull(wallet, r'User', 'wallet');
     BuiltValueNullFieldError.checkNotNull(date, r'User', 'date');
   }
 
@@ -37,12 +44,15 @@ class _$User extends User {
     return other is User &&
         name == other.name &&
         email == other.email &&
+        wallet == other.wallet &&
         date == other.date;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, name.hashCode), email.hashCode), date.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, name.hashCode), email.hashCode), wallet.hashCode),
+        date.hashCode));
   }
 
   @override
@@ -50,6 +60,7 @@ class _$User extends User {
     return (newBuiltValueToStringHelper(r'User')
           ..add('name', name)
           ..add('email', email)
+          ..add('wallet', wallet)
           ..add('date', date))
         .toString();
   }
@@ -66,6 +77,10 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String? get email => _$this._email;
   set email(String? email) => _$this._email = email;
 
+  int? _wallet;
+  int? get wallet => _$this._wallet;
+  set wallet(int? wallet) => _$this._wallet = wallet;
+
   String? _date;
   String? get date => _$this._date;
   set date(String? date) => _$this._date = date;
@@ -77,6 +92,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
     if ($v != null) {
       _name = $v.name;
       _email = $v.email;
+      _wallet = $v.wallet;
       _date = $v.date;
       _$v = null;
     }
@@ -103,6 +119,8 @@ class UserBuilder implements Builder<User, UserBuilder> {
             name: BuiltValueNullFieldError.checkNotNull(name, r'User', 'name'),
             email:
                 BuiltValueNullFieldError.checkNotNull(email, r'User', 'email'),
+            wallet: BuiltValueNullFieldError.checkNotNull(
+                wallet, r'User', 'wallet'),
             date: BuiltValueNullFieldError.checkNotNull(date, r'User', 'date'));
     replace(_$result);
     return _$result;

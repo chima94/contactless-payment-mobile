@@ -1,5 +1,7 @@
+import 'package:contactless_payment_app/screens/home/bloc/home_bloc.dart';
 import 'package:contactless_payment_app/screens/topup/view/top_up.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BalanceCard extends StatelessWidget {
@@ -7,6 +9,7 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final balance = context.select((HomeBloc bloc) => bloc.state.wallet);
     return Container(
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(40)),
@@ -36,7 +39,7 @@ class BalanceCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '7,390',
+                        balance.toString(),
                         style: GoogleFonts.mulish(
                           textStyle: Theme.of(context).textTheme.headline4,
                           fontSize: 35,

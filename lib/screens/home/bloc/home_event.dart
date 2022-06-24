@@ -1,3 +1,4 @@
+import 'package:contactless_payment_app/data/local/entities/user_and_token_entity.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeEvent extends Equatable {
@@ -7,7 +8,7 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddToCartEvent extends HomeEvent {
-  final String productId;
-  const AddToCartEvent({required this.productId});
+class GetUserEvent extends HomeEvent {
+  UserAndTokenEntity user;
+  GetUserEvent({required this.user});
 }

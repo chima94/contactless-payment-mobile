@@ -17,4 +17,5 @@ abstract class UserRepository {
       {required String token, required String productId});
 
   Future<List<CartItemResponse>> cartItems({required String token});
+  Future<void> topupWallet({required int amount, required String token});
 }

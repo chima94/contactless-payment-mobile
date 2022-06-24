@@ -17,7 +17,7 @@ void bootstrap(UserRepository userRepository) {
 
   runZonedGuarded(
     () async {
-      await userRepository.userAndToken$.first;
+      //await userRepository.userAndToken$.first;
       await BlocOverrides.runZoned(
         () async => runApp(App(
           userRepository: userRepository,

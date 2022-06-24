@@ -23,6 +23,8 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
+      'wallet',
+      serializers.serialize(object.wallet, specifiedType: const FullType(int)),
       'date',
       serializers.serialize(object.date, specifiedType: const FullType(String)),
     ];
@@ -49,6 +51,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
+        case 'wallet':
+          result.wallet = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
         case 'date':
           result.date = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
@@ -66,15 +72,22 @@ class _$UserEntity extends UserEntity {
   @override
   final String email;
   @override
+  final int wallet;
+  @override
   final String date;
 
   factory _$UserEntity([void Function(UserEntityBuilder)? updates]) =>
       (new UserEntityBuilder()..update(updates))._build();
 
-  _$UserEntity._({required this.name, required this.email, required this.date})
+  _$UserEntity._(
+      {required this.name,
+      required this.email,
+      required this.wallet,
+      required this.date})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'UserEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(email, r'UserEntity', 'email');
+    BuiltValueNullFieldError.checkNotNull(wallet, r'UserEntity', 'wallet');
     BuiltValueNullFieldError.checkNotNull(date, r'UserEntity', 'date');
   }
 
@@ -91,12 +104,15 @@ class _$UserEntity extends UserEntity {
     return other is UserEntity &&
         name == other.name &&
         email == other.email &&
+        wallet == other.wallet &&
         date == other.date;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, name.hashCode), email.hashCode), date.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, name.hashCode), email.hashCode), wallet.hashCode),
+        date.hashCode));
   }
 
   @override
@@ -104,6 +120,7 @@ class _$UserEntity extends UserEntity {
     return (newBuiltValueToStringHelper(r'UserEntity')
           ..add('name', name)
           ..add('email', email)
+          ..add('wallet', wallet)
           ..add('date', date))
         .toString();
   }
@@ -120,6 +137,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String? get email => _$this._email;
   set email(String? email) => _$this._email = email;
 
+  int? _wallet;
+  int? get wallet => _$this._wallet;
+  set wallet(int? wallet) => _$this._wallet = wallet;
+
   String? _date;
   String? get date => _$this._date;
   set date(String? date) => _$this._date = date;
@@ -131,6 +152,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
     if ($v != null) {
       _name = $v.name;
       _email = $v.email;
+      _wallet = $v.wallet;
       _date = $v.date;
       _$v = null;
     }
@@ -158,6 +180,8 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
                 name, r'UserEntity', 'name'),
             email: BuiltValueNullFieldError.checkNotNull(
                 email, r'UserEntity', 'email'),
+            wallet: BuiltValueNullFieldError.checkNotNull(
+                wallet, r'UserEntity', 'wallet'),
             date: BuiltValueNullFieldError.checkNotNull(
                 date, r'UserEntity', 'date'));
     replace(_$result);

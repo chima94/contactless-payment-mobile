@@ -4,6 +4,7 @@ import 'package:contactless_payment_app/app/bloc/app_state.dart';
 import 'package:contactless_payment_app/data/local/entities/mappers.dart';
 import 'package:contactless_payment_app/data/local/entities/user_and_token_entity.dart';
 import 'package:contactless_payment_app/domain/repositories/user_repository.dart';
+import 'package:contactless_payment_app/utils/result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBLoc extends Bloc<AppEvent, AppState> {
@@ -13,6 +14,7 @@ class AppBLoc extends Bloc<AppEvent, AppState> {
         super(const AppState.appStarted()) {
     on<AppStartedEvent>(_onAppStarted);
     on<AppUserChanged>(_onAppUserChanged);
+
     _userSubscription = _userRepository.userAndToken$.listen((user) {
       if (state.status == AppStatus.appStarted && user != null) {
         add(AppStartedEvent(token: user.token));

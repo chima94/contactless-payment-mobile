@@ -50,7 +50,7 @@ class OperationWidget extends StatelessWidget {
           text,
           style: GoogleFonts.mulish(
               textStyle: Theme.of(context).textTheme.headline4,
-              fontSize: 15,
+              fontSize: 12,
               fontWeight: FontWeight.w600,
               color: const Color(0xff76797e)),
         ),

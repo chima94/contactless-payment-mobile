@@ -48,7 +48,10 @@ class UserRepositoryImp extends UserRepository {
 
   @override
   Future<UserResponse> getUserProfile({required String token}) async {
-    return _remoteDatasource.getUserProfile(token);
+    final user = await _remoteDatasource.getUserProfile(token);
+    await _localDataSource.saveUserAndToken(
+        Mappers.userResponseToUserAndTokenEntity(user, token));
+    return user;
   }
 
   @override
@@ -62,6 +65,13 @@ class UserRepositoryImp extends UserRepository {
   @override
   Future<List<CartItemResponse>> cartItems({required String token}) {
     return _remoteDatasource.cartItems(token);
+  }
+
+  @override
+  Future<void> topupWallet({required int amount, required String token}) async {
+    final user = await _remoteDatasource.topupWallet(amount, token);
+    await _localDataSource.saveUserAndToken(
+        Mappers.userResponseToUserAndTokenEntity(user, token));
   }
 
   Single<Result<T>> _excute<T>(Future<T> Function() factory) =>

@@ -12,4 +12,5 @@ abstract class RemoteDatasource {
   Future<UserResponse> getUserProfile(String token);
   Future<AddCartResponse> addToCart(String token, String productId);
   Future<List<CartItemResponse>> cartItems(String token);
+  Future<UserResponse> topupWallet(int amount, String token);
 }

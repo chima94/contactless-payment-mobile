@@ -24,6 +24,8 @@ class _$UserResponseSerializer implements StructuredSerializer<UserResponse> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
+      'wallet',
+      serializers.serialize(object.wallet, specifiedType: const FullType(int)),
       'date',
       serializers.serialize(object.date, specifiedType: const FullType(String)),
     ];
@@ -51,6 +53,10 @@ class _$UserResponseSerializer implements StructuredSerializer<UserResponse> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
+        case 'wallet':
+          result.wallet = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
         case 'date':
           result.date = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
@@ -68,16 +74,22 @@ class _$UserResponse extends UserResponse {
   @override
   final String email;
   @override
+  final int wallet;
+  @override
   final String date;
 
   factory _$UserResponse([void Function(UserResponseBuilder)? updates]) =>
       (new UserResponseBuilder()..update(updates))._build();
 
   _$UserResponse._(
-      {required this.name, required this.email, required this.date})
+      {required this.name,
+      required this.email,
+      required this.wallet,
+      required this.date})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'UserResponse', 'name');
     BuiltValueNullFieldError.checkNotNull(email, r'UserResponse', 'email');
+    BuiltValueNullFieldError.checkNotNull(wallet, r'UserResponse', 'wallet');
     BuiltValueNullFieldError.checkNotNull(date, r'UserResponse', 'date');
   }
 
@@ -94,12 +106,15 @@ class _$UserResponse extends UserResponse {
     return other is UserResponse &&
         name == other.name &&
         email == other.email &&
+        wallet == other.wallet &&
         date == other.date;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, name.hashCode), email.hashCode), date.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, name.hashCode), email.hashCode), wallet.hashCode),
+        date.hashCode));
   }
 
   @override
@@ -107,6 +122,7 @@ class _$UserResponse extends UserResponse {
     return (newBuiltValueToStringHelper(r'UserResponse')
           ..add('name', name)
           ..add('email', email)
+          ..add('wallet', wallet)
           ..add('date', date))
         .toString();
   }
@@ -124,6 +140,10 @@ class UserResponseBuilder
   String? get email => _$this._email;
   set email(String? email) => _$this._email = email;
 
+  int? _wallet;
+  int? get wallet => _$this._wallet;
+  set wallet(int? wallet) => _$this._wallet = wallet;
+
   String? _date;
   String? get date => _$this._date;
   set date(String? date) => _$this._date = date;
@@ -135,6 +155,7 @@ class UserResponseBuilder
     if ($v != null) {
       _name = $v.name;
       _email = $v.email;
+      _wallet = $v.wallet;
       _date = $v.date;
       _$v = null;
     }
@@ -162,6 +183,8 @@ class UserResponseBuilder
                 name, r'UserResponse', 'name'),
             email: BuiltValueNullFieldError.checkNotNull(
                 email, r'UserResponse', 'email'),
+            wallet: BuiltValueNullFieldError.checkNotNull(
+                wallet, r'UserResponse', 'wallet'),
             date: BuiltValueNullFieldError.checkNotNull(
                 date, r'UserResponse', 'date'));
     replace(_$result);

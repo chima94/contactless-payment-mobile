@@ -21,6 +21,7 @@ class Mappers {
     return UserBuilder()
       ..name = userEntity?.name
       ..email = userEntity?.email
+      ..wallet = userEntity?.wallet
       ..date = userEntity?.date;
   }
 
@@ -28,6 +29,7 @@ class Mappers {
     return UserEntityBuilder()
       ..name = userResponse.name
       ..email = userResponse.email
+      ..wallet = userResponse.wallet
       ..date = userResponse.date;
   }
 
@@ -42,7 +44,6 @@ class Mappers {
 
   static Iterable<CartItem> cartItemResponseToModel(
       List<CartItemResponse> cartItemResponse) {
-    //print(cartItemResponse.map((item) => item.products?.length));
     return cartItemResponse.map((cartItem) => CartItem().copyWith(
           id: cartItem.id,
           productQty: cartItem.products?.length,

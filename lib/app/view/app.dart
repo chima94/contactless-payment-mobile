@@ -28,7 +28,7 @@ class App extends StatelessWidget {
       child: BlocProvider(
         create: (_) => AppBLoc(
           userRepository: _userRepository,
-        )..add(AppStartedEvent()),
+        ),
         child: const AppView(),
       ),
     );

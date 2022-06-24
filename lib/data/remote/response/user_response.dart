@@ -8,6 +8,7 @@ abstract class UserResponse
     implements Built<UserResponse, UserResponseBuilder> {
   String get name;
   String get email;
+  int get wallet;
   String get date;
 
   static Serializer<UserResponse> get serializer => _$userResponseSerializer;
